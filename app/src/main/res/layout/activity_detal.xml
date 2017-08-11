@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.panji.movieapp.DetalActivity">
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     >
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="140dp">
+             <ImageView
+                 android:layout_width="match_parent"
+                 android:layout_height="180dp"
+                 android:background="#000"
+                 android:scaleType="centerCrop"
+                 android:id="@+id/backdrop"
+                 />
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/title"
+                 android:textSize="24sp"
+                 android:textColor="#fff"
+                 android:gravity="center"
+                 android:text="Title Movie"
+                 android:textStyle="bold"
+                 android:layout_marginTop="40dp"
+                 />
+         </RelativeLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_marginTop="15dp"
+
+           android:layout_height="wrap_content">
+           <ImageView
+               android:layout_width="100dp"
+               android:layout_height="150dp"
+
+               android:background="#000"
+               android:id="@+id/poster"
+               android:layout_alignParentTop="true"
+               android:layout_alignParentStart="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+
+                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="tanggal"
+                    android:id="@+id/tgl"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="vote"
+                    android:id="@+id/vote"
+                    />
+
+            </LinearLayout>
+       </LinearLayout>
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+
+             android:text="synopsis"
+             android:layout_marginTop="10dp"
+             android:id="@+id/synopsis"
+             />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+
+             android:text="Trailer"
+             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+             android:layout_margin="10dp"
+
+             />
+         <android.support.v7.widget.RecyclerView
+             android:id="@+id/trailerView"
+
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+         </android.support.v7.widget.RecyclerView>
+     </LinearLayout>
+
+ </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>
