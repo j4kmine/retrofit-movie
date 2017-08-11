@@ -7,8 +7,6 @@ import retrofit2.http.Path;
 /**
  * Created by Panji on 05/08/2017.
  */
-
-
 public interface ApiInterface {
 
     public  static final String BASE_IMG="http://image.tmdb.org/t/p/w185/";
