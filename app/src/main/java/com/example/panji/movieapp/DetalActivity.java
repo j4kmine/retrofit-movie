@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -32,10 +33,14 @@ import static com.example.panji.movieapp.ApiInterface.BASE_IMG;
 
 public class DetalActivity extends AppCompatActivity {
     TrailerAdapter adapter;
+    ReviewAdapter review_adapters;
     List<Trailer> trailerList;
+    List<Review> reviewList;
     RecyclerView recyclerView;
+    RecyclerView recyclerViews;
     public int movie_id;
     RecyclerView.LayoutManager layoutManager;
+    RecyclerView.LayoutManager layoutManagers;
     ImageView backdrop,poster;
     Result data;
     MenuItem item;
@@ -51,15 +56,26 @@ public class DetalActivity extends AppCompatActivity {
         tanggal = (TextView) findViewById(R.id.tgl);
         vote = (TextView) findViewById(R.id.vote);
         synopsis = (TextView) findViewById(R.id.synopsis);
+
+        recyclerViews =(RecyclerView)findViewById(R.id.reviewView);
         recyclerView =(RecyclerView)findViewById(R.id.trailerView);
+
         String title = getIntent().getExtras().getString("title");
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         trailerList = new ArrayList<>();
         adapter = new TrailerAdapter(this,trailerList);
         layoutManager= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(new GridLayoutManager(DetalActivity.this,2));
         recyclerView.setAdapter(adapter);
+
+        reviewList = new ArrayList<>();
+        review_adapters = new ReviewAdapter(this,reviewList);
+        layoutManagers = new LinearLayoutManager(this);
+        recyclerViews.setLayoutManager(new GridLayoutManager(DetalActivity.this,1));
+        recyclerViews.setAdapter(review_adapters);
+
 
         movie_id =data.getId();
 //        String back = getIntent().getExtras().getString("backdrop");
@@ -82,6 +98,7 @@ public class DetalActivity extends AppCompatActivity {
         vote.setText("Vote\n" + data.getVoteCount());
         synopsis.setText(data.getOverview());
         loadJSON();
+        loadReview();
 
     }
 
@@ -147,6 +164,28 @@ public class DetalActivity extends AppCompatActivity {
         return  true;
     }
 
+    public DetalActivity() {
+    }
+
+    private  void loadReview(){
+        ApiInterface apiInterface = ApiClient.getRetrofit()
+                        .create(ApiInterface.class);
+           Call<ReviewResult>call =apiInterface.getReview(movie_id);
+           call.enqueue(new Callback<ReviewResult>() {
+               @Override
+               public void onResponse(Call<ReviewResult> call, Response<ReviewResult> response) {
+
+                   reviewList = response.body().getResults();
+                   recyclerViews.setAdapter(new ReviewAdapter(DetalActivity.this,reviewList));
+                   recyclerViews.smoothScrollToPosition(0);
+               }
+
+               @Override
+               public void onFailure(Call<ReviewResult> call, Throwable t) {
+
+               }
+           });
+    }
     private void loadJSON(){
         //int movie_id = getIntent().getExtras().getInt("id");
         ApiInterface apiInterface = ApiClient.getRetrofit()
@@ -155,6 +194,7 @@ public class DetalActivity extends AppCompatActivity {
         call.enqueue(new Callback<TrailerResult>() {
             @Override
             public void onResponse(Call<TrailerResult> call, Response<TrailerResult> response) {
+
                 trailerList = response.body().getResults();
                 recyclerView.setAdapter(new TrailerAdapter(DetalActivity.this,trailerList));
                 recyclerView.smoothScrollToPosition(0);

@@ -22,7 +22,7 @@ public interface ApiInterface {
     Call<Movie> getNowPlaying();
     @GET("{id_movie}/videos?api_key="+DB_KEY_API)
     Call<TrailerResult>getTrailerMovie(@Path("id_movie") int id);
-    @GET("{id_movie}/review?api_key="+DB_KEY_API)
-    Call<TrailerResult>getReview(@Path("id_movie") int id);
+    @GET("{id_movies}/reviews?api_key="+DB_KEY_API)
+    Call<ReviewResult>getReview(@Path("id_movies") int ids);
 
 }
